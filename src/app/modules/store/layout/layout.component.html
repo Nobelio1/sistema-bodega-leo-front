@@ -1,0 +1,85 @@
+<div class="mx-36">
+    <div class="flex justify-between items-center bg-stone-100 border border-stone-200 rounded-md px-6 py-3">
+        <div class="flex items-center gap-2">
+            <lucide-angular [img]="promoIcon" class="text-yellow-500 w-5 h-5"></lucide-angular>
+            <p class="text-sm">
+                <span class="font-medium">Obtén 5% de descuento en tu primera compra,</span>
+                <span class="text-orange-500 underline font-semibold ml-1">Promo: ORDEN1</span>
+            </p>
+        </div>
+
+        <div class="flex items-center gap-6">
+            <div class="flex items-center gap-2">
+                <lucide-angular [img]="localIcon" class="text-slate-600 w-5 h-5"></lucide-angular>
+                <p class="text-sm">
+                    <span class="font-medium">Calle UPN 123, Lima</span>
+                    <span class="text-orange-500 underline font-semibold ml-1 cursor-pointer">
+            Cambiar ubicación
+          </span>
+                </p>
+            </div>
+
+            <div class="flex items-center bg-emerald-700 text-white rounded-md px-4 py-2 gap-3 cursor-pointer">
+                <div class="flex items-center gap-1">
+                    <lucide-angular [img]="cartIcon" class="w-5 h-5"></lucide-angular>
+                    <span class="text-sm font-medium">23 items</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <header class="flex justify-between items-center py-4 px-10">
+        <div class="flex items-center space-x-2">
+            <p class="text-2xl font-bold">BODERGA LEO</p>
+        </div>
+        <div class="flex items-center gap-8">
+            <nav class="flex items-center space-x-8 font-semibold">
+                <a href="#" class="hover:text-orange-500">Inicio</a>
+                <a href="#" class="hover:text-orange-500">Promociones</a>
+                <a href="#" class="bg-orange-500 text-white px-4 py-2 rounded-full hover:bg-orange-600 transition">
+                    Productos
+                </a>
+            </nav>
+            <div>
+                <button class="bg-black text-white px-5 py-2 rounded-full hover:bg-stone-800 transition">
+                    Iniciar sesión
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex justify-between items-center px-10 py-6">
+        <h2 class="text-lg md:text-xl font-bold text-stone-900">
+            Encuentra lo que necesitas en nuestra tienda online
+        </h2>
+
+        <div class="flex items-center border border-stone-300 rounded-full px-4 py-2 w-72 shadow-sm">
+            <lucide-angular [img]="searchIcon"></lucide-angular>
+            <input
+                    type="text"
+                    placeholder="Buscar productos, marcas y más..."
+                    class="ml-2 outline-none w-full text-sm placeholder-stone-400"
+            />
+        </div>
+    </div>
+</div>
+
+<nav class="bg-orange-500 px-10 py-3 flex justify-center">
+    <ul class="flex flex-wrap items-center gap-6 text-white font-semibold text-sm">
+        <li>
+            <button class="bg-black text-white px-4 py-1 rounded-full">Abarrotes</button>
+        </li>
+        <li><button class="hover:underline">Bebidas</button></li>
+        <li><button class="hover:underline">Lácteos</button></li>
+        <li><button class="hover:underline">Limpieza</button></li>
+        <li><button class="hover:underline">Verduras y Frutas</button></li>
+        <li><button class="hover:underline">Carnes y Embutidos</button></li>
+        <li><button class="hover:underline">Snacks</button></li>
+        <li><button class="hover:underline">Panadería</button></li>
+        <li><button class="hover:underline">Especias y Condimentos</button></li>
+        <li><button class="hover:underline">Higiene Personal</button></li>
+    </ul>
+</nav>
+
+
+<router-outlet/>

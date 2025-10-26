@@ -1,0 +1,23 @@
+<section class="px-10 py-8 mx-36">
+    <h2 class="text-2xl font-bold mb-6">Abarrotes</h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        @for (producto of productos(); track producto.idProducto) {
+            <div class="bg-white shadow-md rounded-xl overflow-hidden hover:shadow-lg transition">
+                <div class="flex justify-between items-center">
+                    <div class="p-4">
+                        <h3 class="font-semibold text-lg">{{ producto.nombre }}</h3>
+                        <p class="text-sm text-stone-500 mt-1">{{ producto.descripcion }}</p>
+                        <p class="font-bold text-stone-900 mt-3">S/. {{ producto.precio.toFixed(2) }}</p>
+                    </div>
+                    <div class="relative w-32 h-32 flex justify-center items-center">
+                        <img [src]="'http://localhost:8080/api'+producto.imagen" alt="{{ producto.nombre }}" class="rounded-md object-cover w-full h-full" />
+                        <button class="absolute bottom-2 right-2 bg-black text-white rounded-full w-8 h-8 flex justify-center items-center text-lg">
+                            +
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
