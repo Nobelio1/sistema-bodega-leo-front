@@ -1,0 +1,168 @@
+<div class="mx-64 py-20">
+  <section class="page-wrapper space-y-12">
+    <header class="section-card flex flex-col gap-6">
+      <div class="flex flex-wrap gap-4 items-center justify-between">
+        <div>
+          <p class="badge bg-orange-100 text-orange-600 px-3 py-1 rounded-full font-semibold">Promociones activas</p>
+          <h1 class="text-4xl font-bold text-stone-900 mt-3">Ahorra hoy en tu despensa y limpieza</h1>
+          <p class="text-stone-600 mt-2 max-w-2xl">
+            Seleccionamos ofertas basadas en tus pedidos recientes. Combina envíos express, membresías y combos pensados
+            para el hogar.
+          </p>
+        </div>
+        <button class="bg-stone-900 text-white px-6 py-3 rounded-2xl font-semibold hover:bg-stone-800"
+                (click)="reload()">
+          Reintentar carga
+        </button>
+      </div>
+      <div class="state-card flex flex-wrap items-center gap-4">
+      <span class="status-indicator text-stone-700">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        {{ statusMessage() }}
+      </span>
+        <span *ngIf="!isLoading() && !hasError()" class="text-sm text-stone-500">
+        Última actualización hace 2 min
+      </span>
+      </div>
+    </header>
+
+    <section class="section-card space-y-8">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <p class="badge text-orange-500">Descuentos recomendados</p>
+          <h2 class="text-3xl font-bold text-stone-900">Promos para tu despensa inmediata</h2>
+        </div>
+        <a [routerLink]="'/productos'" class="text-sm font-semibold text-emerald-700 hover:text-emerald-800">Ver todos
+          los productos →</a>
+      </div>
+
+      <div *ngIf="isLoading()" class="grid-responsive">
+        @for (index of [1, 2, 3]; track index) {
+          <article class="promo-card animate-pulse bg-stone-50">
+            <div class="h-4 bg-stone-200 rounded w-1/3"></div>
+            <div class="h-6 bg-stone-200 rounded w-2/3"></div>
+            <div class="h-4 bg-stone-100 rounded w-full"></div>
+            <div class="h-10 bg-stone-200 rounded w-1/2"></div>
+          </article>
+        }
+      </div>
+
+      <div *ngIf="!isLoading() && !hasError() && activePromos().length" class="grid-responsive">
+        @for (promo of activePromos(); track promo.id) {
+          <article class="promo-card">
+            <div class="flex items-center justify-between">
+              <span class="badge bg-orange-100 text-orange-600 px-3 py-1 rounded-full">{{ promo.tag }}</span>
+              <span class="text-emerald-600 font-semibold">-{{ promo.discount }}%</span>
+            </div>
+            <div>
+              <h3 class="text-2xl font-bold text-stone-900">{{ promo.title }}</h3>
+              <p class="text-stone-600">{{ promo.description }}</p>
+            </div>
+            <div class="flex items-end justify-between">
+              <div>
+                <p class="text-3xl font-bold text-stone-900">S/ {{ promo.price | number: '1.0-2' }}</p>
+                <p *ngIf="promo.beforePrice" class="text-sm text-stone-400 line-through">
+                  S/ {{ promo.beforePrice | number: '1.0-2' }}</p>
+                <p *ngIf="priceDelta(promo) as delta" class="text-xs text-emerald-600">Ahorra
+                  S/ {{ delta | number: '1.0-2' }}</p>
+              </div>
+              <div class="text-right text-sm text-stone-500">
+                <p>{{ promo.expiresLabel }}</p>
+                <p>
+                  <span class="status-dot" [class.bg-emerald-500]="promo.stockStatus === 'alto'"
+                        [class.bg-amber-400]="promo.stockStatus === 'medio'"
+                        [class.bg-rose-500]="promo.stockStatus === 'bajo'"></span>
+                  {{ stockLabel(promo.stockStatus) }}
+                </p>
+              </div>
+            </div>
+            <a [routerLink]="'/carrito'"
+               class="text-center bg-emerald-600 text-white py-3 rounded-2xl font-semibold hover:bg-emerald-700">
+              Aprovechar ahora
+            </a>
+          </article>
+        }
+      </div>
+
+      <div *ngIf="hasError()" class="state-card bg-rose-50 text-rose-700">
+        <p class="font-semibold">No pudimos cargar tus promociones</p>
+        <p class="text-sm">Revisa tu conexión o intenta nuevamente.</p>
+      </div>
+
+      <div *ngIf="!isLoading() && !hasError() && !activePromos().length" class="state-card text-stone-600">
+        <p class="font-semibold">Sin promociones activas ahora</p>
+        <p class="text-sm">Te avisaremos apenas haya una nueva campaña disponible.</p>
+      </div>
+    </section>
+
+    <section class="section-card space-y-8">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <p class="badge text-orange-500">Combos temporales</p>
+          <h2 class="text-3xl font-bold text-stone-900">Ahorra más juntando tus básicos</h2>
+        </div>
+        <a [routerLink]="'/inicio'" class="text-sm font-semibold text-orange-500 hover:text-orange-600">Ver destacados
+          →</a>
+      </div>
+
+      <div *ngIf="comboDeals().length; else emptyCombos" class="grid-responsive">
+        @for (combo of comboDeals(); track combo.id) {
+          <article class="promo-card">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="badge bg-emerald-50 text-emerald-600 px-3 py-1 rounded-full">{{ combo.tag }}</p>
+                <h3 class="text-2xl font-bold text-stone-900 mt-2">{{ combo.title }}</h3>
+              </div>
+              <span class="text-emerald-600 font-semibold">-{{ combo.discount }}%</span>
+            </div>
+            <p class="text-stone-600">{{ combo.description }}</p>
+            <div class="flex items-end justify-between">
+              <div>
+                <p class="text-3xl font-bold text-stone-900">S/ {{ combo.price | number: '1.0-2' }}</p>
+                <p *ngIf="combo.beforePrice" class="text-sm text-stone-400 line-through">
+                  S/ {{ combo.beforePrice | number: '1.0-2' }}</p>
+              </div>
+              <p class="text-sm text-stone-500">{{ combo.expiresLabel }}</p>
+            </div>
+            <div class="flex flex-wrap gap-3">
+              <a [routerLink]="'/carrito'"
+                 class="flex-1 text-center bg-orange-500 text-white py-3 rounded-2xl font-semibold hover:bg-orange-600">
+                Añadir combo
+              </a>
+              <a [routerLink]="'/productos'"
+                 class="flex-1 text-center border border-stone-200 py-3 rounded-2xl font-semibold text-stone-700">
+                Ver detalles
+              </a>
+            </div>
+          </article>
+        }
+      </div>
+      <ng-template #emptyCombos>
+        <div class="state-card text-stone-600">
+          <p class="font-semibold">No hay combos disponibles ahora</p>
+          <p class="text-sm">Agrega tus productos favoritos para recibir alertas personalizadas.</p>
+        </div>
+      </ng-template>
+    </section>
+
+    <section class="section-card bg-stone-900 text-white">
+      <div class="flex flex-wrap items-center justify-between gap-4 mb-8">
+        <div>
+          <p class="badge text-orange-200">Beneficios Hogar+</p>
+          <h2 class="text-3xl font-bold">Te premiamos por comprar con nosotros</h2>
+        </div>
+        <a [routerLink]="'/perfil'" class="text-sm font-semibold text-white/80">Gestionar mi membresía →</a>
+      </div>
+      <div class="grid-responsive">
+        @for (benefit of vipBenefits(); track benefit.id) {
+          <article class="vip-card flex flex-col gap-3">
+            <span class="text-3xl">{{ benefit.icon }}</span>
+            <h3 class="text-2xl font-semibold">{{ benefit.title }}</h3>
+            <p class="text-white/80">{{ benefit.detail }}</p>
+            <p class="text-sm text-emerald-100">{{ benefit.highlight }}</p>
+          </article>
+        }
+      </div>
+    </section>
+  </section>
+</div>

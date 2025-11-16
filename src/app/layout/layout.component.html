@@ -1,0 +1,40 @@
+<div class="bg-orange-500">
+  <div class="mx-36 ">
+    <header class="flex justify-between items-center py-4 px-10">
+      <div class="flex items-center space-x-2">
+        <p class="text-2xl font-bold text-white">BODEGA LEO</p>
+      </div>
+
+      <div class="flex items-center border-none rounded-full px-4 py-2 w-2/4 bg-white shadow-sm">
+        <lucide-angular [img]="searchIcon"></lucide-angular>
+        <input
+          type="text"
+          placeholder="Buscar productos, marcas y más..."
+          class="ml-2 outline-none w-full text-sm placeholder-stone-400"
+        />
+      </div>
+
+      <div class="flex items-center gap-8">
+        <nav class="flex items-center space-x-8 font-semibold">
+          @for (ruta of pages(); track ruta.id) {
+            <a [routerLink]="ruta.route" routerLinkActive="bg-orange-700 px-4 py-2 rounded-full" class="text-white"
+               >{{ ruta.title }}</a>
+          }
+        </nav>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <div class="flex items-center bg-emerald-700 text-white rounded-md px-4 py-2 gap-2 cursor-pointer">
+          <lucide-angular [img]="cartIcon" class="w-6 h-6"></lucide-angular>
+          <span class="text-sm font-medium">23 items</span>
+        </div>
+
+        <button class="bg-black text-white px-4 py-2 rounded-md hover:bg-stone-800 transition">
+          Iniciar sesión
+        </button>
+      </div>
+    </header>
+  </div>
+</div>
+
+<router-outlet/>

@@ -1,4 +1,4 @@
-import {IDataResponse} from "../../../../../shared/interfaces/api.interface";
+import {IDataResponse} from '../../../shared/interfaces/api.interface';
 
 export interface IProducto {
   idProducto: number;

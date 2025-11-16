@@ -1,0 +1,85 @@
+:host {
+  display: block;
+  background: #fff;
+}
+
+.products-wrapper {
+  padding: 3rem;
+  border-radius: 2rem;
+  background: linear-gradient(145deg, rgba(249, 115, 22, 0.08), rgba(16, 185, 129, 0.08));
+}
+
+.products-card {
+  background: #fff;
+  border-radius: 1.75rem;
+  padding: 2rem;
+  box-shadow: 0 25px 50px rgba(15, 23, 42, 0.12);
+}
+
+.category-pill {
+  border-radius: 999px;
+  padding: 0.75rem 1.25rem;
+  border: 1px solid rgba(120, 113, 108, 0.35);
+  cursor: pointer;
+  transition: transform 200ms ease, background 200ms ease;
+}
+
+.category-pill[aria-pressed="true"] {
+  background: rgb(249 115 22);
+  color: white;
+  border-color: transparent;
+}
+
+.category-pill:focus-visible {
+  outline: 2px solid rgb(249 115 22);
+  outline-offset: 2px;
+}
+
+.product-card {
+  border: 1px solid rgba(120, 113, 108, 0.2);
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: transform 200ms ease, border-color 200ms ease;
+}
+
+.product-card:hover {
+  border-color: rgb(16 185 129);
+  transform: translateY(-4px);
+}
+
+.product-image {
+  border-radius: 1.25rem;
+  overflow: hidden;
+  background: #f5f5f4;
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #f9fafb 25%, #e5e7eb 37%, #f9fafb 63%);
+  background-size: 400% 100%;
+  animation: shimmer 1.4s ease infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
+
+@media (max-width: 1024px) {
+  .products-wrapper {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .products-card {
+    padding: 1.5rem;
+  }
+}
+

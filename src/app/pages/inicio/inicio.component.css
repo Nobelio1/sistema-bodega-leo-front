@@ -1,0 +1,64 @@
+:host {
+  display: block;
+  background-color: #fff;
+}
+
+.hero-surface {
+  background: radial-gradient(circle at top left, rgba(249, 115, 22, 0.12), transparent 55%),
+  radial-gradient(circle at top right, rgba(16, 185, 129, 0.15), transparent 60%),
+  #fff7ed;
+}
+
+.hero-badge {
+  letter-spacing: 0.05em;
+}
+
+.category-card {
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.category-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+.product-card {
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  transition: border-color 200ms ease, transform 200ms ease;
+}
+
+.product-card:hover {
+  border-color: rgb(249 115 22);
+  transform: translateY(-6px);
+}
+
+.rating-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 9999px;
+  display: inline-block;
+}
+
+.tip-card {
+  border-left: 4px solid rgb(16 185 129);
+}
+
+@media (max-width: 1024px) {
+  .grid-responsive {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-flex {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .hero-actions {
+    justify-content: center;
+  }
+}
+
