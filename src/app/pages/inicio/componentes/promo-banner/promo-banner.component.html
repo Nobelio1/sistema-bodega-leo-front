@@ -1,68 +1,134 @@
-<div class="w-full bg-orange-500 py-8 mt-10 font-sans text-white">
+<div class="promo-banner">
+  <div class="promo-container">
+    <!-- Header -->
+    <div class="promo-header">
+      <div class="promo-header-content">
+        <span class="promo-label">Ofertas Especiales</span>
+        <h2 class="promo-title">Promociones de la Semana</h2>
+      </div>
+      <div class="promo-navigation">
+        <button
+          (click)="scroll('left')"
+          class="nav-button nav-button-prev"
+          aria-label="Anterior">
+          <lucide-angular [img]="flechaIzquierda" [size]="20"></lucide-angular>
+        </button>
+        <button
+          (click)="scroll('right')"
+          class="nav-button nav-button-next"
+          aria-label="Siguiente">
+          <lucide-angular [img]="flechaDerecha" [size]="20"></lucide-angular>
+        </button>
+      </div>
+    </div>
 
-  <div class="relative mx-auto max-w-7xl px-4">
-
-    <button
-      (click)="scroll('left')"
-      class="absolute left-0 top-1/2 z-10 -translate-y-1/2 -translate-x-2 md:-translate-x-6
-             flex h-10 w-10 items-center justify-center rounded-full bg-white text-green-700 shadow-lg
-             transition-transform hover:scale-110 active:scale-95 cursor-pointer">
-      <lucide-angular [img]="flechaIzquierda"></lucide-angular>
-    </button>
-
+    <!-- Carousel -->
     <div
       #scrollContainer
-      class="flex snap-x snap-mandatory scroll-smooth gap-5 overflow-x-auto px-2 pb-4
-         [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+      class="promo-carousel">
 
       @for (item of items(); track item.id) {
-        <div class="snap-center shrink-0 relative flex h-[280px] w-full md:w-[45%] lg:w-[32%]
-                    items-center justify-between overflow-hidden rounded-2xl
-                    bg-gradient-to-br from-green-600 to-green-900 p-6 shadow-xl">
+        <article class="promo-card" [attr.data-type]="item.type">
 
-          <div class="relative w-1/3 shrink-0">
-            <img [src]="'https://placehold.co/100x200/transparent/white?text=Botella'"
-                 alt="Botella"
-                 class="mx-auto h-40 object-contain drop-shadow-2xl filter">
-          </div>
-
-          <div class="flex w-2/3 flex-col items-start pl-4">
-
-            @if (item.type === 'discount') {
-              <div class="flex flex-col leading-none">
-                <span class="text-xs font-bold uppercase tracking-wide">HASTA</span>
-                <span class="text-[4rem] font-black tracking-tighter leading-[0.9]">{{ item.value }}</span>
-                <span class="self-end text-xs font-bold uppercase tracking-wide">DESCT.</span>
+          <!-- Discount Card -->
+          @if (item.type === 'discount') {
+            <div class="promo-card-content">
+              <div class="discount-badge">
+                <svg class="discount-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+                </svg>
+                <div class="discount-value">
+                  <span class="discount-label">Hasta</span>
+                  <span class="discount-number">{{ item.value }}</span>
+                  <span class="discount-text">descuento</span>
+                </div>
               </div>
-              <p class="mt-2 text-sm font-medium">{{ item.title }}</p>
-            }
-
-            @if (item.type === 'price') {
-              <div class="w-full rounded-lg bg-white p-3 text-center shadow-md">
-                <span class="block text-[10px] font-bold text-gray-500 uppercase">PRECIO OFERTA</span>
-                <span class="block text-3xl font-bold text-green-700">{{ item.value }}</span>
-                <span class="block text-[10px] text-gray-400 line-through">Precio regular {{ item.regularPrice }}</span>
+              <div class="promo-info">
+                <h3 class="promo-product-title">{{ item.title }}</h3>
+                <p class="promo-validity">Válido hasta agotar stock</p>
+                <a [routerLink]="'/productos'" class="promo-link">
+                  Ver productos
+                  <svg class="link-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                  </svg>
+                </a>
               </div>
-              <div class="mt-2 text-left">
-                <p class="text-sm font-bold leading-tight">{{ item.title }}</p>
-                <p class="text-xs font-light opacity-90">{{ item.subtitle }}</p>
+            </div>
+            <div class="promo-image-container">
+              <div class="promo-image-placeholder">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                        d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                </svg>
               </div>
-            }
+            </div>
+          }
 
-          </div>
-        </div>
+          <!-- Price Card -->
+          @if (item.type === 'price') {
+            <div class="promo-card-content">
+              <div class="price-tag">
+                <span class="price-label">Precio especial</span>
+                <div class="price-main">
+                  <span class="price-currency">S/</span>
+                  <span class="price-amount">{{ item.value?.replace('S/ ', '') }}</span>
+                </div>
+                @if (item.regularPrice) {
+                  <div class="price-regular">
+                    <span class="price-regular-label">Precio regular:</span>
+                    <span class="price-regular-amount">{{ item.regularPrice }}</span>
+                  </div>
+                }
+                @if (item.regularPrice && item.value) {
+                  <div class="price-savings">
+                    <svg class="savings-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <span>Ahorra {{ calculateSavings(item.regularPrice, item.value) }}</span>
+                  </div>
+                }
+              </div>
+              <div class="promo-info">
+                <h3 class="promo-product-title">{{ item.title }}</h3>
+                @if (item.subtitle) {
+                  <p class="promo-product-subtitle">{{ item.subtitle }}</p>
+                }
+                <a [routerLink]="'/carrito'" class="promo-link promo-link-primary">
+                  Agregar al pedido
+                  <svg class="link-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+            <div class="promo-image-container">
+              <div class="promo-image-placeholder">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                        d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                </svg>
+              </div>
+            </div>
+          }
+
+        </article>
       }
 
     </div>
 
-    <button
-      (click)="scroll('right')"
-      class="absolute right-0 top-1/2 z-10 -translate-y-1/2 translate-x-2 md:translate-x-6
-             flex h-10 w-10 items-center justify-center rounded-full bg-white text-green-700 shadow-lg
-             transition-transform hover:scale-110 active:scale-95 cursor-pointer">
-      <lucide-angular [img]="flechaDerecha"></lucide-angular>
-    </button>
-
+    <!-- Progress Indicators -->
+    <div class="promo-indicators">
+      @for (item of items(); track item.id; let i = $index) {
+        <button
+          class="indicator-dot"
+          [class.indicator-active]="currentIndex() === i"
+          (click)="scrollToIndex(i)"
+          [attr.aria-label]="'Ir a promoción ' + (i + 1)">
+        </button>
+      }
+    </div>
   </div>
 </div>
-

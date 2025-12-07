@@ -1,0 +1,405 @@
+/* Banner Container */
+.promo-banner {
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  padding: 3rem 0;
+  border-top: 1px solid #e5e7eb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.promo-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Header */
+.promo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.promo-header-content {
+  flex: 1;
+}
+
+.promo-label {
+  display: block;
+  color: #1e40af;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+
+.promo-title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #111827;
+  letter-spacing: -0.02em;
+}
+
+.promo-navigation {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.nav-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 50%;
+  color: #1e40af;
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+
+.nav-button:hover {
+  background-color: #1e40af;
+  border-color: #1e40af;
+  color: white;
+  transform: scale(1.05);
+}
+
+.nav-button:active {
+  transform: scale(0.95);
+}
+
+/* Carousel */
+.promo-carousel {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding-bottom: 1rem;
+}
+
+.promo-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+/* Promo Cards */
+.promo-card {
+  flex: 0 0 auto;
+  width: 100%;
+  min-width: 320px;
+  max-width: 450px;
+  scroll-snap-align: start;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  display: flex;
+  transition: all 300ms ease;
+}
+
+.promo-card:hover {
+  border-color: #1e40af;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px);
+}
+
+.promo-card-content {
+  flex: 1;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.promo-image-container {
+  flex: 0 0 140px;
+  background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.promo-image-placeholder {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.promo-image-placeholder svg {
+  width: 100%;
+  height: 100%;
+  color: #9ca3af;
+}
+
+/* Discount Badge */
+.discount-badge {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+  border-radius: 0.5rem;
+  color: white;
+}
+
+.discount-icon {
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+}
+
+.discount-value {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.discount-label {
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.9;
+}
+
+.discount-number {
+  font-size: 3rem;
+  font-weight: 900;
+  letter-spacing: -0.05em;
+}
+
+.discount-text {
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  align-self: flex-end;
+  opacity: 0.9;
+}
+
+/* Price Tag */
+.price-tag {
+  padding: 1.25rem;
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  border: 2px solid #10b981;
+  border-radius: 0.5rem;
+  text-align: center;
+}
+
+.price-label {
+  display: block;
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #047857;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+
+.price-main {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.price-currency {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #047857;
+}
+
+.price-amount {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #047857;
+  line-height: 1;
+}
+
+.price-regular {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-bottom: 0.75rem;
+}
+
+.price-regular-label {
+  font-weight: 500;
+}
+
+.price-regular-amount {
+  text-decoration: line-through;
+  font-weight: 600;
+}
+
+.price-savings {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.75rem;
+  background-color: #10b981;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 9999px;
+}
+
+.savings-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Promo Info */
+.promo-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.promo-product-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1.3;
+}
+
+.promo-product-subtitle {
+  font-size: 0.875rem;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+.promo-validity {
+  font-size: 0.75rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.promo-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1e40af;
+  text-decoration: none;
+  transition: all 200ms ease;
+}
+
+.promo-link:hover {
+  gap: 0.75rem;
+  color: #1e3a8a;
+}
+
+.promo-link-primary {
+  padding: 0.75rem 1.5rem;
+  background-color: #1e40af;
+  color: white;
+  border-radius: 0.5rem;
+  justify-content: center;
+}
+
+.promo-link-primary:hover {
+  background-color: #1e3a8a;
+  gap: 0.5rem;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(30, 64, 175, 0.2);
+}
+
+.link-arrow {
+  width: 1rem;
+  height: 1rem;
+  transition: transform 200ms ease;
+}
+
+/* Progress Indicators */
+.promo-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.indicator-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background-color: #d1d5db;
+  border: none;
+  cursor: pointer;
+  transition: all 200ms ease;
+  padding: 0;
+}
+
+.indicator-dot:hover {
+  background-color: #9ca3af;
+  transform: scale(1.2);
+}
+
+.indicator-active {
+  width: 1.5rem;
+  border-radius: 0.25rem;
+  background-color: #1e40af;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .promo-banner {
+    padding: 2rem 0;
+  }
+
+  .promo-container {
+    padding: 0 1rem;
+  }
+
+  .promo-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .promo-title {
+    font-size: 1.5rem;
+  }
+
+  .promo-card {
+    min-width: 280px;
+    max-width: 100%;
+  }
+
+  .promo-card-content {
+    padding: 1.5rem;
+  }
+
+  .discount-number {
+    font-size: 2.5rem;
+  }
+
+  .price-amount {
+    font-size: 2rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .promo-card {
+    width: calc(50% - 0.75rem);
+  }
+}
+
+@media (min-width: 1024px) {
+  .promo-card {
+    width: calc(33.333% - 1rem);
+  }
+}

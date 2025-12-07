@@ -1,7 +1,8 @@
-import {Component, signal} from "@angular/core";
-import {RouterLink, RouterLinkActive, RouterOutlet} from "@angular/router";
-import {LucideAngularModule, MapPin, Search, ShoppingBasket, Sparkles} from "lucide-angular";
-import {CommonModule} from '@angular/common';
+import { Component, signal, inject, computed } from "@angular/core";
+import { RouterLink, RouterLinkActive, RouterOutlet } from "@angular/router";
+import { LucideAngularModule, MapPin, Search, ShoppingBasket, Sparkles, User, LogOut } from "lucide-angular";
+import { CommonModule } from '@angular/common';
+import { AuthService } from '../core/services/auth.service';
 
 @Component({
   selector: 'lyt-layout',
@@ -15,10 +16,18 @@ import {CommonModule} from '@angular/common';
   ]
 })
 export class LayoutComponent {
-  public cartIcon = ShoppingBasket
-  public localIcon = MapPin
-  public promoIcon = Sparkles
-  public searchIcon = Search
+  private readonly authService = inject(AuthService);
+
+  public cartIcon = ShoppingBasket;
+  public localIcon = MapPin;
+  public promoIcon = Sparkles;
+  public searchIcon = Search;
+  public userIcon = User;
+  public logoutIcon = LogOut;
+
+  public isAuthenticated = this.authService.isAuthenticated;
+  public currentUser = this.authService.currentUser;
+  public isAdmin = computed(() => this.authService.isAdminOrTrabajador());
 
   public pages = signal([
     {
@@ -28,14 +37,12 @@ export class LayoutComponent {
     },
     {
       id: 2,
-      title: 'Promociones',
-      route: '/promociones'
-    },
-    {
-      id: 3,
       title: 'Productos',
       route: '/productos'
     },
-  ])
+  ]);
 
+  logout(): void {
+    this.authService.logout();
+  }
 }

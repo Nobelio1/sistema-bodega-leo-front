@@ -1,131 +1,280 @@
-<app-promo-banner/>
-
-<div class="mx-64 py-20">
-
-  <section class="mb-16">
-    <div class="flex justify-between items-center mb-6">
-      <div>
-        <p class="text-sm font-semibold text-orange-500 uppercase tracking-wide">Categorias activas</p>
-        <h2 class="text-3xl font-bold text-stone-900">Compra por necesidades</h2>
-      </div>
-      <a [routerLink]="'/productos'" class="text-sm font-semibold text-emerald-700 hover:text-emerald-800">
-        Ver catálogo completo →
-      </a>
-    </div>
-
-    <div class="grid grid-cols-4 gap-6 grid-responsive">
-      @for (category of categories(); track category.id) {
-        <article class="category-card rounded-3xl p-6 text-white bg-gradient-to-br" [ngClass]="category.accent">
-          <div class="text-4xl mb-4">{{ category.icon }}</div>
-          <h3 class="text-2xl font-semibold">{{ category.name }}</h3>
-          <p class="text-sm text-white/80 mb-4">{{ category.description }}</p>
-          <a [routerLink]="['/productos']" class="text-sm font-semibold text-white/90">
-            Ver más →
-          </a>
-        </article>
-      }
-    </div>
-  </section>
-
-  <section class="mb-16">
-    <div class="flex flex-col gap-2 mb-6">
-      <p class="text-sm font-semibold text-orange-500 uppercase tracking-wide">Selección destacada</p>
-      <h2 class="text-3xl font-bold text-stone-900">Para llenar tu despensa hoy</h2>
-    </div>
-    <div class="grid grid-cols-3 gap-6 grid-responsive">
-      @for (product of featuredProducts(); track product.id) {
-        <article class="product-card">
-          <p
-            class="inline-flex items-center text-xs uppercase font-semibold bg-orange-100 text-orange-600 px-3 py-1 rounded-full mb-4">
-            {{ product.badge }}
-          </p>
-          <h3 class="text-2xl font-semibold text-stone-900 mb-2">{{ product.name }}</h3>
-          <p class="text-stone-600 mb-4">{{ product.description }}</p>
-          <div class="flex justify-between items-center mb-4">
-            <div>
-              <p class="text-sm text-stone-500">{{ product.unit }}</p>
-              <p class="text-2xl font-bold text-stone-900">S/ {{ product.price | number: '1.0-2' }}</p>
-            </div>
-            <div class="text-right">
-              <p class="text-sm text-stone-500">{{ productStatus(product) }}</p>
-              <p class="text-orange-600 font-semibold">{{ product.stock }} disponibles</p>
-            </div>
-          </div>
-          <a
-            class="block text-center bg-emerald-600 text-white py-3 rounded-2xl font-semibold hover:bg-emerald-700 transition"
-            [routerLink]="'/carrito'"
-          >
-            Agregar al carrito
-          </a>
-        </article>
-      }
-    </div>
-  </section>
-
-  <section class="mb-16 grid grid-cols-3 gap-6 grid-responsive">
-    <div class="bg-stone-900 text-white rounded-3xl p-8 space-y-6">
-      <p class="text-sm text-orange-300 uppercase tracking-wide">Clientes reales</p>
-      <h2 class="text-3xl font-bold">Nos prefieren por puntualidad y frescura</h2>
-      <p class="text-stone-200">
-        Cada pedido se selecciona desde bodega propia y se gestiona con repartidores verificados para mantener la cadena
-        de frío.
+<div class="container">
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1 class="hero-title">Abastecimiento Profesional para su Hogar y Negocio</h1>
+      <p class="hero-description">
+        Calidad garantizada en abarrotes, productos de limpieza y artículos esenciales. Atención
+        personalizada y entregas puntuales en Lima Metropolitana.
       </p>
-      <a [routerLink]="'/pedidos'" class="inline-flex items-center gap-2 font-semibold text-orange-300">
-        Conocer nuestra logística →
+      <div class="hero-actions">
+        <a [routerLink]="'/productos'" class="btn btn-primary"> Ver Catálogo Completo </a>
+        <a [routerLink]="'/contacto'" class="btn btn-secondary"> Solicitar Cotización </a>
+      </div>
+      <div class="hero-features">
+        <div class="feature-item">
+          <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          <span>Productos Certificados</span>
+        </div>
+        <div class="feature-item">
+          <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          <span>Entregas Programadas</span>
+        </div>
+        <div class="feature-item">
+          <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
+            />
+          </svg>
+          <span>Pagos Seguros</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <app-promo-banner />
+
+  <!-- Categories Section -->
+  <section class="section-categories">
+    <div class="section-header">
+      <div class="section-header-content">
+        <span class="section-label">Nuestras Líneas de Productos</span>
+        <h2 class="section-title">Categorías Disponibles</h2>
+        <p class="section-subtitle">Amplio surtido de productos de primera calidad</p>
+      </div>
+      <a [routerLink]="'/productos'" class="link-primary">
+        Ver todo el catálogo
+        <svg class="link-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
       </a>
     </div>
-    <div class="col-span-2 grid gap-6">
-      @for (testimonial of testimonials(); track testimonial.id) {
-        <article class="bg-white border border-stone-100 rounded-3xl p-6 shadow-sm">
-          <div class="flex items-center justify-between mb-4">
-            <div>
-              <p class="font-semibold text-stone-900">{{ testimonial.author }}</p>
-              <p class="text-sm text-stone-500">{{ testimonial.orderFrequency }}</p>
+
+    <div class="categories-grid">
+      @for (category of categories(); track category.id) {
+      <article class="category-card" [attr.data-category]="category.id">
+        <div class="category-icon">{{ category.icon }}</div>
+        <div class="category-content">
+          <h3 class="category-title">{{ category.name }}</h3>
+          <p class="category-description">{{ category.description }}</p>
+          <a
+            [routerLink]="['/productos']"
+            [queryParams]="{ categoria: category.id }"
+            class="category-link"
+          >
+            Explorar sección
+            <svg class="link-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M14 5l7 7m0 0l-7 7m7-7H3"
+              />
+            </svg>
+          </a>
+        </div>
+      </article>
+      }
+    </div>
+  </section>
+
+  <!-- Featured Products Section -->
+  <section class="section-products">
+    <div class="section-header">
+      <div class="section-header-content">
+        <span class="section-label">Productos Destacados</span>
+        <h2 class="section-title">Ofertas de la Semana</h2>
+        <p class="section-subtitle">Aprovecha nuestros precios especiales</p>
+      </div>
+    </div>
+
+    <div class="products-grid">
+      @for (product of featuredProducts(); track product.id) {
+      <article class="product-card">
+        <div class="product-badge">
+          <span class="badge-text">{{ product.badge }}</span>
+        </div>
+        <div class="product-image-placeholder">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="1.5"
+              d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
+            />
+          </svg>
+        </div>
+        <div class="product-content">
+          <span class="product-category">{{ product.category }}</span>
+          <h3 class="product-title">{{ product.name }}</h3>
+          <p class="product-description">{{ product.description }}</p>
+
+          <div class="product-info">
+            <div class="product-pricing">
+              <span class="product-unit">{{ product.unit }}</span>
+              <span class="product-price">S/ {{ product.price | number : '1.2-2' }}</span>
             </div>
-            <div class="flex gap-1">
-              @for (star of starScale; track star) {
-                <span class="text-lg" [class.text-orange-500]="star <= testimonial.rating">★</span>
-              }
+            <div class="product-stock" [class.stock-low]="product.stock <= 10">
+              <svg class="stock-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
+                />
+              </svg>
+              <span>{{ product.stock }} unidades</span>
             </div>
           </div>
-          <p class="text-stone-600">“{{ testimonial.detail }}”</p>
-        </article>
+
+          <button class="btn btn-add-cart" [routerLink]="'/carrito'">
+            <svg class="btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+              />
+            </svg>
+            Añadir al Pedido
+          </button>
+        </div>
+      </article>
       }
     </div>
   </section>
 
-  <section class="bg-stone-50 rounded-3xl p-10 mb-20">
-    <div class="flex flex-col gap-3 mb-8">
-      <p class="text-sm font-semibold text-orange-500 uppercase tracking-wide">Tips para mantener tu hogar</p>
-      <h2 class="text-3xl font-bold text-stone-900">Siempre listo con tu despensa inteligente</h2>
+  <!-- Testimonials Section -->
+  <section class="section-testimonials">
+    <div class="testimonials-header">
+      <span class="section-label">Testimonios de Clientes</span>
+      <h2 class="section-title">Confianza y Satisfacción</h2>
+      <p class="section-subtitle">Lo que nuestros clientes dicen de nosotros</p>
     </div>
-    <div class="grid grid-cols-3 gap-6 grid-responsive">
-      @for (tip of stockedTips(); track tip) {
-        <article class="bg-white rounded-2xl p-6 shadow-sm tip-card">
-          <p class="text-stone-700">{{ tip }}</p>
-        </article>
+
+    <div class="testimonials-grid">
+      @for (testimonial of testimonials(); track testimonial.id) {
+      <article class="testimonial-card">
+        <div class="testimonial-header">
+          <div class="testimonial-author">
+            <div class="author-avatar">
+              {{ testimonial.author.charAt(0) }}
+            </div>
+            <div class="author-info">
+              <p class="author-name">{{ testimonial.author }}</p>
+              <p class="author-frequency">{{ testimonial.orderFrequency }}</p>
+            </div>
+          </div>
+          <div class="testimonial-rating">
+            @for (star of starScale; track star) {
+            <svg
+              class="star-icon"
+              [class.star-filled]="star <= testimonial.rating"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path
+                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+              />
+            </svg>
+            }
+          </div>
+        </div>
+        <p class="testimonial-text">"{{ testimonial.detail }}"</p>
+      </article>
       }
     </div>
   </section>
 
+  <!-- Info Section -->
+  <section class="section-info">
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="info-icon info-icon-primary">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+            />
+          </svg>
+        </div>
+        <h3 class="info-title">Calidad Garantizada</h3>
+        <p class="info-description">
+          Todos nuestros productos cuentan con certificaciones y provienen de proveedores
+          confiables.
+        </p>
+      </div>
+
+      <div class="info-card">
+        <div class="info-icon info-icon-success">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M13 10V3L4 14h7v7l9-11h-7z"
+            />
+          </svg>
+        </div>
+        <h3 class="info-title">Entrega Rápida</h3>
+        <p class="info-description">
+          Servicio de entrega en menos de 24 horas dentro de Lima Metropolitana.
+        </p>
+      </div>
+
+      <div class="info-card">
+        <div class="info-icon info-icon-warning">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+        </div>
+        <h3 class="info-title">Mejores Precios</h3>
+        <p class="info-description">
+          Precios competitivos y descuentos por volumen para clientes frecuentes.
+        </p>
+      </div>
+    </div>
+  </section>
 </div>
 
-<section class="bg-emerald-600 p-10 text-white flex flex-wrap gap-8 items-center justify-between">
-  <div>
-    <p class="text-sm uppercase tracking-wide text-white/70 mb-2">Abastece tu hogar hoy</p>
-    <h2 class="text-4xl font-bold mb-3">Agenda tu pedido programado o express</h2>
-    <p class="text-white/80 max-w-2xl">
-      Nuestro equipo coordina entregas en menos de 2 horas dentro de la ciudad y mantiene tus compras recurrentes
-      automatizadas.
-    </p>
-  </div>
-  <div class="flex gap-4">
-    <a [routerLink]="'/pago'" class="bg-white text-emerald-700 font-semibold px-6 py-3 rounded-2xl">
-      Programar entrega
-    </a>
-    <a [routerLink]="'/carrito'"
-       class="bg-emerald-500 text-white font-semibold px-6 py-3 rounded-2xl border border-white/40">
-      Pedir ahora
-    </a>
+<!-- CTA Section -->
+<section class="cta-section">
+  <div class="cta-container">
+    <div class="cta-content">
+      <span class="cta-label">Haga su pedido hoy</span>
+      <h2 class="cta-title">¿Necesita abastecer su negocio o hogar?</h2>
+      <p class="cta-description">
+        Contamos con servicio de atención personalizada y entregas programadas. Solicite una
+        cotización sin compromiso.
+      </p>
+    </div>
+    <div class="cta-actions">
+      <a [routerLink]="'/productos'" class="btn btn-cta-primary"> Ver Catálogo </a>
+      <a [routerLink]="'/contacto'" class="btn btn-cta-secondary"> Contactar Ahora </a>
+    </div>
   </div>
 </section>

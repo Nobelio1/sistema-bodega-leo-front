@@ -1,40 +1,176 @@
-<div class="bg-orange-500">
-  <div class="mx-36 ">
-    <header class="flex justify-between items-center py-4 px-10">
-      <div class="flex items-center space-x-2">
-        <p class="text-2xl font-bold text-white">BODEGA LEO</p>
-      </div>
+<header class="bg-white shadow-sm sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="flex justify-between items-center py-4">
+      <a [routerLink]="['/inicio']" class="flex items-center gap-3 group">
+        <div
+          class="w-12 h-12 bg-gradient-to-br from-blue-900 to-blue-700 rounded-lg flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow"
+        >
+          <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+            />
+          </svg>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-2xl font-bold text-blue-900 tracking-tight">BODEGA LEO</span>
+        </div>
+      </a>
 
-      <div class="flex items-center border-none rounded-full px-4 py-2 w-2/4 bg-white shadow-sm">
-        <lucide-angular [img]="searchIcon"></lucide-angular>
-        <input
-          type="text"
-          placeholder="Buscar productos, marcas y más..."
-          class="ml-2 outline-none w-full text-sm placeholder-stone-400"
-        />
-      </div>
+      <nav class="hidden lg:flex items-center gap-8">
+        @for (ruta of pages(); track ruta.id) {
+        <a
+          [routerLink]="ruta.route"
+          routerLinkActive="text-blue-900 font-bold border-b-2 border-blue-900"
+          [routerLinkActiveOptions]="{ exact: false }"
+          class="text-gray-600 font-semibold hover:text-blue-900 transition-colors pb-1 border-b-2 border-transparent"
+        >
+          {{ ruta.title }}
+        </a>
+        }
+      </nav>
 
-      <div class="flex items-center gap-8">
-        <nav class="flex items-center space-x-8 font-semibold">
-          @for (ruta of pages(); track ruta.id) {
-            <a [routerLink]="ruta.route" routerLinkActive="bg-orange-700 px-4 py-2 rounded-full" class="text-white"
-               >{{ ruta.title }}</a>
-          }
-        </nav>
-      </div>
+      <div class="flex items-center gap-3">
+        @if (isAuthenticated()) { @if (!isAdmin()) {
+        <a
+          [routerLink]="['/carrito']"
+          class="relative flex items-center gap-2 px-4 py-2.5 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-700 transition-all hover:shadow-md group"
+        >
+          <lucide-angular
+            [img]="cartIcon"
+            [size]="20"
+            class="group-hover:scale-110 transition-transform"
+          ></lucide-angular>
+          <span class="hidden sm:inline">Carrito</span>
+          <span
+            class="absolute -top-2 -right-2 bg-orange-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center"
+          >
+            0
+          </span>
+        </a>
+        }
 
-      <div class="flex items-center gap-4">
-        <div class="flex items-center bg-emerald-700 text-white rounded-md px-4 py-2 gap-2 cursor-pointer">
-          <lucide-angular [img]="cartIcon" class="w-6 h-6"></lucide-angular>
-          <span class="text-sm font-medium">23 items</span>
+        <div class="relative group">
+          <button
+            class="flex items-center gap-2 px-4 py-2.5 bg-gray-100 text-gray-700 rounded-lg font-medium hover:bg-gray-200 transition-all border border-gray-200"
+          >
+            <div
+              class="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-800 rounded-full flex items-center justify-center"
+            >
+              <lucide-angular [img]="userIcon" [size]="16" class="text-white"></lucide-angular>
+            </div>
+            <span class="hidden md:inline text-sm font-semibold">{{
+              currentUser()?.nombreUsuario
+            }}</span>
+            <svg
+              class="w-4 h-4 text-gray-500 group-hover:rotate-180 transition-transform"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </button>
+
+          <div
+            class="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 translate-y-2 transition-all duration-200 z-50"
+          >
+            <div class="p-3 border-b border-gray-100">
+              <p class="text-xs text-gray-500 uppercase tracking-wide font-semibold">Cuenta</p>
+              <p class="text-sm font-bold text-gray-900 mt-1">{{ currentUser()?.nombreUsuario }}</p>
+            </div>
+
+            <div class="py-2">
+              @if (isAdmin()) {
+              <a
+                [routerLink]="['/admin']"
+                class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-900 transition-colors group"
+              >
+                <svg
+                  class="w-5 h-5 text-gray-400 group-hover:text-blue-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+                  />
+                </svg>
+                <span class="font-medium">Panel Admin</span>
+              </a>
+              } @else {
+              <a
+                [routerLink]="['/mis-pedidos']"
+                class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-900 transition-colors group"
+              >
+                <svg
+                  class="w-5 h-5 text-gray-400 group-hover:text-blue-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+                  />
+                </svg>
+                <span class="font-medium">Mis Pedidos</span>
+              </a>
+              }
+            </div>
+
+            <div class="border-t border-gray-100 py-2">
+              <button
+                (click)="logout()"
+                class="flex items-center gap-3 w-full px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors group"
+              >
+                <lucide-angular
+                  [img]="logoutIcon"
+                  [size]="18"
+                  class="text-red-500"
+                ></lucide-angular>
+                <span class="font-medium">Cerrar Sesión</span>
+              </button>
+            </div>
+          </div>
         </div>
 
-        <button class="bg-black text-white px-4 py-2 rounded-md hover:bg-stone-800 transition">
-          Iniciar sesión
+        } @else {
+        <div class="flex items-center gap-2">
+          <a
+            [routerLink]="['/auth/login']"
+            class="flex items-center gap-2 px-5 py-2.5 bg-blue-900 text-white rounded-lg font-semibold hover:bg-blue-800 transition-all hover:shadow-md"
+          >
+            <lucide-angular [img]="userIcon" [size]="18"></lucide-angular>
+            <span>Iniciar Sesión</span>
+          </a>
+        </div>
+        }
+
+        <button class="lg:hidden p-2 text-gray-600 hover:text-blue-900">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
         </button>
       </div>
-    </header>
+    </div>
   </div>
-</div>
-
-<router-outlet/>
+</header>
+<router-outlet />

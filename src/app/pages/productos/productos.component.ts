@@ -1,9 +1,8 @@
 import {CommonModule} from '@angular/common';
 import {Component, OnInit, computed, inject, signal} from '@angular/core';
 import {RouterLink} from '@angular/router';
-import {IProducto} from './interfaces/producto.interface';
 import {ProductosService} from './service/productos.service';
-import {LucideAngularModule} from 'lucide-angular';
+import {LucideAngularModule, Search} from 'lucide-angular';
 
 @Component({
   selector: 'page-productos',
@@ -14,14 +13,17 @@ import {LucideAngularModule} from 'lucide-angular';
 })
 export class ProductosComponent implements OnInit {
   private readonly productosService = inject(ProductosService);
+  protected searchIcon = Search;
 
-  protected readonly productos = signal<IProducto[]>([]);
+  protected readonly productos = signal<any[]>([]);
   protected readonly isLoading = signal(false);
   protected readonly hasError = signal(false);
   protected readonly searchTerm = signal('');
   protected readonly selectedCategory = signal<string>('todos');
 
   protected readonly categories = computed(() => {
+      console.log(this.productos())
+
     const all = this.productos().map((producto) => producto.nombreCategoria);
     return ['todos', ...new Set(all)] as string[];
   });
@@ -45,14 +47,15 @@ export class ProductosComponent implements OnInit {
   protected obtenerProductos(): void {
     this.isLoading.set(true);
     this.hasError.set(false);
+
     this.productosService.getProductos().subscribe({
       next: ({data, success, message}) => {
-        if (!success) {
-          console.error(message);
-          this.hasError.set(true);
-          return;
+
+        if(!success){
+          return
         }
-        this.productos.set(data);
+
+        this.productos.set(data.content);
         this.isLoading.set(false);
       },
       error: (error) => {
@@ -63,7 +66,7 @@ export class ProductosComponent implements OnInit {
     });
   }
 
-  protected trackById = (_: number, producto: IProducto) => producto.idProducto;
+  protected trackById = (_: number, producto: any) => producto.idProducto;
 
   protected updateSearch(term: string): void {
     this.searchTerm.set(term);
