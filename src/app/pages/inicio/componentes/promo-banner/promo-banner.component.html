@@ -1,6 +1,5 @@
 <div class="promo-banner">
   <div class="promo-container">
-    <!-- Header -->
     <div class="promo-header">
       <div class="promo-header-content">
         <span class="promo-label">Ofertas Especiales</span>
@@ -22,7 +21,6 @@
       </div>
     </div>
 
-    <!-- Carousel -->
     <div
       #scrollContainer
       class="promo-carousel">
@@ -30,7 +28,6 @@
       @for (item of items(); track item.id) {
         <article class="promo-card" [attr.data-type]="item.type">
 
-          <!-- Discount Card -->
           @if (item.type === 'discount') {
             <div class="promo-card-content">
               <div class="discount-badge">
@@ -65,7 +62,6 @@
             </div>
           }
 
-          <!-- Price Card -->
           @if (item.type === 'price') {
             <div class="promo-card-content">
               <div class="price-tag">
@@ -119,7 +115,6 @@
 
     </div>
 
-    <!-- Progress Indicators -->
     <div class="promo-indicators">
       @for (item of items(); track item.id; let i = $index) {
         <button

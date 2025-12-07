@@ -16,12 +16,10 @@
     </div>
   } @else {
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-      <!-- Lista de productos -->
       <div class="lg:col-span-2 space-y-4">
-        @for (producto of productos(); track $index) {
+        @for (producto of productos(); track producto.idProducto) {
           <div class="bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-shadow">
             <div class="flex gap-6">
-              <!-- Imagen -->
               <div class="w-24 h-24 rounded-xl overflow-hidden bg-stone-100 flex-shrink-0">
                 @if (producto.imagen) {
                   <img [src]="producto.imagen" [alt]="producto.nombre" class="w-full h-full object-cover"/>
@@ -30,29 +28,28 @@
                 }
               </div>
 
-              <!-- Detalles -->
               <div class="flex-1">
                 <h3 class="text-xl font-bold text-stone-900 mb-2">{{ producto.nombre }}</h3>
                 <p class="text-2xl font-bold text-orange-600 mb-4">
-                  S/ {{ producto.precio | number: '1.0-2' }}
+                  S/ {{ producto.precio | number: '1.2-2' }}
                 </p>
 
-                <!-- Cantidad -->
                 <div class="flex items-center gap-4">
                   <label class="text-sm font-semibold text-stone-700">Cantidad:</label>
                   <div class="flex items-center gap-2">
-                    <button (click)="actualizarCantidad($index, producto.cantidad - 1)"
+                    <button (click)="actualizarCantidad(producto.idProducto, producto.cantidad - 1)"
                             class="w-8 h-8 bg-stone-200 rounded-lg hover:bg-stone-300 transition">
                       -
                     </button>
                     <input type="number"
                            [value]="producto.cantidad"
-                           (change)="actualizarCantidad($index, +$any($event.target).value)"
+                           (change)="actualizarCantidad(producto.idProducto, +$any($event.target).value)"
                            min="1"
                            [max]="producto.stock"
                            class="w-16 text-center border-2 border-stone-200 rounded-lg py-1"/>
-                    <button (click)="actualizarCantidad($index, producto.cantidad + 1)"
-                            class="w-8 h-8 bg-stone-200 rounded-lg hover:bg-stone-300 transition">
+                    <button (click)="actualizarCantidad(producto.idProducto, producto.cantidad + 1)"
+                            [disabled]="producto.cantidad >= producto.stock"
+                            class="w-8 h-8 bg-stone-200 rounded-lg hover:bg-stone-300 transition disabled:opacity-50 disabled:cursor-not-allowed">
                       +
                     </button>
                   </div>
@@ -60,13 +57,12 @@
                 </div>
               </div>
 
-              <!-- Subtotal y eliminar -->
               <div class="text-right">
                 <p class="text-sm text-stone-600 mb-2">Subtotal</p>
                 <p class="text-2xl font-bold text-stone-900 mb-4">
-                  S/ {{ (producto.precio * producto.cantidad) | number: '1.0-2' }}
+                  S/ {{ (producto.precio * producto.cantidad) | number: '1.2-2' }}
                 </p>
-                <button (click)="eliminarProducto($index)"
+                <button (click)="eliminarProducto(producto.idProducto)"
                         class="text-rose-600 hover:text-rose-700 font-semibold text-sm">
                   🗑️ Eliminar
                 </button>
@@ -81,7 +77,6 @@
         </button>
       </div>
 
-      <!-- Resumen del pedido -->
       <div class="lg:col-span-1">
         <div class="bg-white rounded-2xl p-6 shadow-lg sticky top-8">
           <h2 class="text-2xl font-bold text-stone-900 mb-6">Resumen del Pedido</h2>
@@ -89,23 +84,23 @@
           <div class="space-y-4 mb-6 pb-6 border-b border-stone-200">
             <div class="flex justify-between">
               <span class="text-stone-600">Subtotal</span>
-              <span class="font-semibold">S/ {{ subtotal() | number: '1.0-2' }}</span>
+              <span class="font-semibold">S/ {{ subtotal() | number: '1.2-2' }}</span>
             </div>
             <div class="flex justify-between">
               <span class="text-stone-600">IGV (18%)</span>
-              <span class="font-semibold">S/ {{ igv() | number: '1.0-2' }}</span>
+              <span class="font-semibold">S/ {{ igv() | number: '1.2-2' }}</span>
             </div>
           </div>
 
           <div class="flex justify-between mb-6">
             <span class="text-xl font-bold text-stone-900">Total</span>
-            <span class="text-3xl font-bold text-orange-600">S/ {{ total() | number: '1.0-2' }}</span>
+            <span class="text-3xl font-bold text-orange-600">S/ {{ total() | number: '1.2-2' }}</span>
           </div>
 
           <button (click)="procesarPedido()"
-                  [disabled]="loading()"
+                  [disabled]="loading"
                   class="w-full bg-gradient-to-r from-emerald-500 to-emerald-600 text-white py-4 rounded-2xl font-bold text-lg hover:shadow-xl transition-all disabled:opacity-50">
-            @if (loading()) {
+            @if (loading) {
               Procesando...
             } @else {
               Procesar Pedido

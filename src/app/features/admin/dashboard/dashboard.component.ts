@@ -26,7 +26,6 @@ interface PedidoReciente {
   imports: [CommonModule, RouterLink],
   template: `
     <div class="space-y-8">
-      <!-- Estadísticas principales -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-3xl p-6 text-white shadow-xl">
           <div class="flex items-center justify-between mb-4">
@@ -73,7 +72,6 @@ interface PedidoReciente {
         </div>
       </div>
 
-      <!-- Pedidos Recientes -->
       <div class="bg-white rounded-3xl shadow-lg p-8">
         <div class="flex items-center justify-between mb-6">
           <div>
@@ -121,7 +119,6 @@ interface PedidoReciente {
         }
       </div>
 
-      <!-- Acciones Rápidas -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <a [routerLink]="['/admin/productos']"
            class="bg-white rounded-3xl p-6 shadow-lg hover:shadow-xl transition-shadow border-2 border-transparent hover:border-orange-300">
@@ -160,7 +157,6 @@ export class DashboardComponent implements OnInit {
   }
 
   private cargarEstadisticas(): void {
-    // Simulación - en producción conectar con endpoints reales
     setTimeout(() => {
       this.estadisticas.set({
         totalPedidosHoy: 15,

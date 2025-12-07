@@ -13,7 +13,6 @@ import { PedidoService, PedidoRes } from '../../../core/services/pedido.service'
         <p class="text-sm text-stone-600">Visualiza y gestiona todos los pedidos</p>
       </div>
 
-      <!-- Filtros -->
       <div class="bg-white rounded-2xl p-6 shadow-sm">
         <div class="flex gap-3 flex-wrap">
           @for (estado of ['TODOS', 'PENDIENTE', 'PROCESANDO', 'ENTREGADO', 'CANCELADO']; track estado) {
@@ -26,7 +25,6 @@ import { PedidoService, PedidoRes } from '../../../core/services/pedido.service'
         </div>
       </div>
 
-      <!-- Tabla de pedidos -->
       <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
         @if (loading()) {
           <div class="p-8">

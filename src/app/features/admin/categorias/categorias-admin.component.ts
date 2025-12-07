@@ -20,7 +20,6 @@ import { CategoriaService, Categoria } from '../../../core/services/categoria.se
         </button>
       </div>
 
-      <!-- Formulario de creación/edición -->
       @if (mostrarFormulario) {
         <div class="bg-white rounded-2xl p-6 shadow-lg border-2 border-orange-300">
           <h3 class="text-xl font-bold text-stone-900 mb-4">
@@ -53,7 +52,6 @@ import { CategoriaService, Categoria } from '../../../core/services/categoria.se
         </div>
       }
 
-      <!-- Lista de categorías -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         @if (loading()) {
           @for (i of [1,2,3]; track i) {

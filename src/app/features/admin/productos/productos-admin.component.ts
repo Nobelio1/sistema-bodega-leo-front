@@ -30,27 +30,22 @@ export class ProductosAdminComponent implements OnInit {
   private readonly categoriaService = inject(CategoriaService);
   private readonly fb = inject(FormBuilder);
 
-  // Signals
   productos = signal<any[]>([]);
   productosFiltrados = signal<any[]>([]);
   categorias = signal<Categoria[]>([]);
   loading = signal(false);
   
-  // Modal states
   mostrarModalCrear = signal(false);
   mostrarModalEditar = signal(false);
   mostrarModalStock = signal(false);
   mostrarModalImagen = signal(false);
   
-  // Forms
   productoForm!: FormGroup;
   editarForm!: FormGroup;
   stockForm!: FormGroup;
   
-  // Selected product
   productoSeleccionado: any = null;
   
-  // Image upload
   archivoImagen: File | null = null;
   previsualizacionImagen: string | null = null;
 
@@ -59,7 +54,6 @@ export class ProductosAdminComponent implements OnInit {
     this.cargarDatos();
   }
 
-  // ==================== INICIALIZACIÓN ====================
   
   private inicializarFormularios(): void {
     this.productoForm = this.fb.group({
@@ -79,7 +73,7 @@ export class ProductosAdminComponent implements OnInit {
 
     this.stockForm = this.fb.group({
       stock: [0, [Validators.required, Validators.min(1)]],
-      tipoActualizacion: [true] // true = incrementar, false = decrementar
+      tipoActualizacion: [true]
     });
   }
 
@@ -88,7 +82,6 @@ export class ProductosAdminComponent implements OnInit {
     this.cargarCategorias();
   }
 
-  // ==================== CARGAR DATOS ====================
   
   cargarProductos(): void {
     this.loading.set(true);
@@ -121,7 +114,6 @@ export class ProductosAdminComponent implements OnInit {
     });
   }
 
-  // ==================== FILTRADO Y BÚSQUEDA ====================
   
   filtrarProductos(termino: string): void {
     const term = termino.toLowerCase().trim();
@@ -148,7 +140,6 @@ export class ProductosAdminComponent implements OnInit {
     this.productosFiltrados.set(filtrados);
   }
 
-  // ==================== CREAR PRODUCTO ====================
   
   abrirModalCrear(): void {
     this.productoForm.reset({
@@ -193,7 +184,6 @@ export class ProductosAdminComponent implements OnInit {
     });
   }
 
-  // ==================== EDITAR PRODUCTO ====================
   
   abrirModalEditar(producto: any): void {
     this.productoSeleccionado = producto;
@@ -242,7 +232,6 @@ export class ProductosAdminComponent implements OnInit {
     });
   }
 
-  // ==================== CAMBIAR ESTADO ====================
   
   cambiarEstadoProducto(id: number, nombreProducto: string): void {
     if (!confirm(`¿Desea cambiar el estado del producto "${nombreProducto}"?`)) {
@@ -268,7 +257,6 @@ export class ProductosAdminComponent implements OnInit {
     });
   }
 
-  // ==================== GESTIÓN DE STOCK ====================
   
   abrirModalStock(producto: any): void {
     this.productoSeleccionado = producto;
@@ -320,7 +308,6 @@ export class ProductosAdminComponent implements OnInit {
     });
   }
 
-  // ==================== GESTIÓN DE IMÁGENES ====================
   
   abrirModalImagen(producto: any): void {
     this.productoSeleccionado = producto;
@@ -341,13 +328,11 @@ export class ProductosAdminComponent implements OnInit {
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
       
-      // Validar tipo de archivo
       if (!file.type.startsWith('image/')) {
         this.mostrarError('Por favor seleccione una imagen válida');
         return;
       }
-      
-      // Validar tamaño (máximo 5MB)
+
       if (file.size > 5 * 1024 * 1024) {
         this.mostrarError('La imagen no debe superar los 5MB');
         return;
@@ -355,7 +340,6 @@ export class ProductosAdminComponent implements OnInit {
       
       this.archivoImagen = file;
       
-      // Crear previsualización
       const reader = new FileReader();
       reader.onload = (e: any) => {
         this.previsualizacionImagen = e.target.result;
@@ -389,8 +373,6 @@ export class ProductosAdminComponent implements OnInit {
       }
     });
   }
-
-  // ==================== UTILIDADES ====================
   
   private marcarCamposComoTocados(form: FormGroup): void {
     Object.keys(form.controls).forEach(key => {
@@ -425,13 +407,12 @@ export class ProductosAdminComponent implements OnInit {
     return 'En stock';
   }
 
-  // ==================== MENSAJES ====================
   
   private mostrarExito(mensaje: string): void {
-    alert(mensaje); // Usar toastr, snackbar o similar en producción
+    alert(mensaje);
   }
 
   private mostrarError(mensaje: string): void {
-    alert(mensaje); // Usar toastr, snackbar o similar en producción
+    alert(mensaje);
   }
 }

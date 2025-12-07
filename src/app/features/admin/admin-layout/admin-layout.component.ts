@@ -65,7 +65,6 @@ export class AdminLayoutComponent {
   });
 
   constructor() {
-    // Actualizar la ruta actual
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe((event: any) => {

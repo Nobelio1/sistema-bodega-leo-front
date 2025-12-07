@@ -4,7 +4,6 @@
     <p class="text-stone-600">Revisa el estado de tus pedidos</p>
   </div>
 
-  <!-- Filtros -->
   <div class="bg-white rounded-2xl p-6 shadow-md mb-8">
     <div class="flex flex-wrap gap-3">
       @for (estado of ['TODOS', 'PENDIENTE', 'PROCESANDO', 'EN_CAMINO', 'ENTREGADO', 'CANCELADO']; track estado) {
@@ -17,7 +16,6 @@
     </div>
   </div>
 
-  <!-- Lista de pedidos -->
   @if (loading()) {
     <div class="space-y-4">
       @for (i of [1,2,3]; track i) {

@@ -15,7 +15,6 @@ import { FormsModule } from '@angular/forms';
         <p class="text-sm text-stone-600">Control de transacciones y pagos</p>
       </div>
 
-      <!-- Estadísticas de pagos -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div class="bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-3xl p-6 text-white">
           <div class="text-4xl mb-2">✅</div>
@@ -36,7 +35,6 @@ import { FormsModule } from '@angular/forms';
         </div>
       </div>
 
-      <!-- Búsqueda de pedidos para ver pagos -->
       <div class="bg-white rounded-2xl p-6 shadow-sm">
         <label class="block text-sm font-semibold text-stone-700 mb-2">
           Buscar pagos por código de pedido
@@ -53,7 +51,6 @@ import { FormsModule } from '@angular/forms';
         </div>
       </div>
 
-      <!-- Lista de pagos encontrados -->
       @if (pagosMostrados().length > 0) {
         <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
           <table class="w-full">
@@ -118,12 +115,10 @@ export class PagosAdminComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    // Cargar estadísticas generales
     this.cargarEstadisticas();
   }
 
   cargarEstadisticas(): void {
-    // Simulación - conectar con endpoints reales
     this.estadisticas.set({
       confirmados: 25,
       pendientes: 5,
@@ -137,11 +132,9 @@ export class PagosAdminComponent implements OnInit {
       return;
     }
 
-    // Primero buscar el pedido por código
     this.pedidoService.buscarPorCodigoRecojo(this.codigoPedidoBusqueda).subscribe({
       next: (response) => {
         if (response.success) {
-          // Luego buscar los pagos del pedido
           this.pagoService.obtenerPagosPorPedido(response.data.idPedido).subscribe({
             next: (pagosResponse) => {
               if (pagosResponse.success) {

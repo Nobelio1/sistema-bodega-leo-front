@@ -1,18 +1,10 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
 import { PedidoService } from '../../core/services/pedido.service';
-
-interface ProductoCarrito {
-  idProducto: number;
-  nombre: string;
-  precio: number;
-  cantidad: number;
-  imagen?: string;
-  stock: number;
-}
+import { CarritoService } from './carrito.service';
 
 @Component({
   selector: 'app-carrito',
@@ -23,60 +15,59 @@ interface ProductoCarrito {
 export class CarritoComponent implements OnInit {
   private readonly authService = inject(AuthService);
   private readonly pedidoService = inject(PedidoService);
+  private readonly carritoService = inject(CarritoService);
+  private readonly router = inject(Router);
 
-  productos = signal<ProductoCarrito[]>([]);
-  loading = signal(false);
+  productos = this.carritoService.itemsCarrito;
+  loading = false;
 
-  subtotal = computed(() => {
-    return this.productos().reduce((sum, p) => sum + (p.precio * p.cantidad), 0);
-  });
-
-  igv = computed(() => this.subtotal() * 0.18);
-  total = computed(() => this.subtotal() + this.igv());
+  subtotal = this.carritoService.subtotal;
+  igv = this.carritoService.igv;
+  total = this.carritoService.total;
 
   ngOnInit(): void {
-    this.cargarCarrito();
   }
 
-  cargarCarrito(): void {
-    const carritoGuardado = localStorage.getItem('carrito');
-    if (carritoGuardado) {
-      this.productos.set(JSON.parse(carritoGuardado));
-    }
-  }
-
-  actualizarCantidad(index: number, cantidad: number): void {
+  actualizarCantidad(idProducto: number, cantidad: number): void {
     if (cantidad < 1) return;
-    const prods = [...this.productos()];
-    if (cantidad <= prods[index].stock) {
-      prods[index].cantidad = cantidad;
-      this.productos.set(prods);
-      this.guardarCarrito();
+    
+    try {
+      this.carritoService.actualizarCantidad(idProducto, cantidad);
+    } catch (error: any) {
+      alert(error.message || 'Error al actualizar cantidad');
     }
   }
 
-  eliminarProducto(index: number): void {
-    const prods = [...this.productos()];
-    prods.splice(index, 1);
-    this.productos.set(prods);
-    this.guardarCarrito();
+  eliminarProducto(idProducto: number): void {
+    if (confirm('¿Estás seguro de eliminar este producto del carrito?')) {
+      this.carritoService.eliminarProducto(idProducto);
+    }
   }
 
   vaciarCarrito(): void {
     if (confirm('¿Estás seguro de vaciar el carrito?')) {
-      this.productos.set([]);
-      this.guardarCarrito();
+      this.carritoService.vaciarCarrito();
     }
   }
 
   procesarPedido(): void {
-    if (this.productos().length === 0) return;
+    if (this.productos().length === 0) {
+      alert('El carrito está vacío');
+      return;
+    }
 
-    this.loading.set(true);
+    const user = this.authService.currentUser();
+    if (!user) {
+      alert('Debes iniciar sesión para realizar un pedido');
+      this.router.navigate(['/auth/login']);
+      return;
+    }
+
+    this.loading = true;
 
     const pedidoData = {
-      idCliente: 1, // Obtener del usuario actual
-      idEstado: 1, // Estado inicial
+      idCliente: 1,
+      idEstado: 1,
       montoTotal: this.total(),
       detallePedido: this.productos().map(p => ({
         idProducto: p.idProducto,
@@ -88,20 +79,19 @@ export class CarritoComponent implements OnInit {
 
     this.pedidoService.crearPedido(pedidoData).subscribe({
       next: (response) => {
-        this.loading.set(false);
+        this.loading = false;
         if (response.success) {
-          alert('¡Pedido creado exitosamente! Código: ' + response.data);
-          this.vaciarCarrito();
+          alert('¡Pedido creado exitosamente! Código de recojo: ' + response.data);
+          this.carritoService.vaciarCarrito();
+          this.router.navigate(['/mis-pedidos']);
+        } else {
+          alert('Error: ' + response.message);
         }
       },
-      error: () => {
-        this.loading.set(false);
-        alert('Error al crear el pedido');
+      error: (error) => {
+        this.loading = false;
+        alert('Error al crear el pedido: ' + (error.error?.message || 'Error desconocido'));
       }
     });
-  }
-
-  private guardarCarrito(): void {
-    localStorage.setItem('carrito', JSON.stringify(this.productos()));
   }
 }

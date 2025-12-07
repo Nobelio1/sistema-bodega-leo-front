@@ -29,7 +29,7 @@ export class MisPedidosComponent implements OnInit {
   }
 
   cargarPedidos(): void {
-    const idCliente = 1; // Obtener del authService
+    const idCliente = 1;
 
     this.pedidoService.listarPedidosPorCliente(idCliente, 0, 100).subscribe({
       next: (response) => {

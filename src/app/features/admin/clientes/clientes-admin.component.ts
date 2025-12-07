@@ -14,7 +14,6 @@ import { FormsModule } from '@angular/forms';
         <p class="text-sm text-stone-600">Información de clientes registrados</p>
       </div>
 
-      <!-- Búsqueda -->
       <div class="bg-white rounded-2xl p-6 shadow-sm">
         <input type="search"
                [(ngModel)]="searchTerm"
@@ -23,7 +22,6 @@ import { FormsModule } from '@angular/forms';
                class="w-full px-4 py-3 rounded-xl border-2 border-stone-200 focus:border-orange-500 focus:outline-none"/>
       </div>
 
-      <!-- Grid de clientes -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         @if (loading()) {
           @for (i of [1,2,3,4,5,6]; track i) {

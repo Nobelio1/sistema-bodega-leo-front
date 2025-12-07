@@ -3,14 +3,12 @@
   background-color: #fafafa;
 }
 
-/* Container */
 .container {
   max-width: 1280px;
   margin: 0 auto;
   padding: 0 2rem;
 }
 
-/* Hero Section */
 .hero-section {
   padding: 4rem 0 5rem;
   background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
@@ -129,7 +127,6 @@
   transform: translateY(-2px);
 }
 
-/* Section Styles */
 .section-header {
   display: flex;
   justify-content: space-between;
@@ -185,7 +182,6 @@
   height: 1.25rem;
 }
 
-/* Categories */
 .section-categories {
   padding: 4rem 0;
 }
@@ -254,7 +250,6 @@
   height: 1rem;
 }
 
-/* Products */
 .section-products {
   padding: 4rem 0;
   background: white;
@@ -506,7 +501,6 @@
   font-style: italic;
 }
 
-/* Info Section */
 .section-info {
   padding: 4rem 0;
   background: white;
@@ -564,7 +558,6 @@
   line-height: 1.6;
 }
 
-/* CTA Section */
 .cta-section {
   background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
   padding: 4rem 0;
@@ -637,7 +630,6 @@
   transform: translateY(-2px);
 }
 
-/* Responsive */
 @media (max-width: 1024px) {
   .hero-title {
     font-size: 2.5rem;

@@ -3,6 +3,7 @@ import {Component, OnInit, computed, inject, signal} from '@angular/core';
 import {RouterLink} from '@angular/router';
 import {ProductosService} from './service/productos.service';
 import {LucideAngularModule, Search} from 'lucide-angular';
+import { CarritoService } from '../carrito/carrito.service';
 
 @Component({
   selector: 'page-productos',
@@ -13,6 +14,7 @@ import {LucideAngularModule, Search} from 'lucide-angular';
 })
 export class ProductosComponent implements OnInit {
   private readonly productosService = inject(ProductosService);
+  private readonly carritoService = inject(CarritoService);
   protected searchIcon = Search;
 
   protected readonly productos = signal<any[]>([]);
@@ -22,8 +24,6 @@ export class ProductosComponent implements OnInit {
   protected readonly selectedCategory = signal<string>('todos');
 
   protected readonly categories = computed(() => {
-      console.log(this.productos())
-
     const all = this.productos().map((producto) => producto.nombreCategoria);
     return ['todos', ...new Set(all)] as string[];
   });
@@ -49,12 +49,10 @@ export class ProductosComponent implements OnInit {
     this.hasError.set(false);
 
     this.productosService.getProductos().subscribe({
-      next: ({data, success, message}) => {
-
+      next: ({data, success}) => {
         if(!success){
           return
         }
-
         this.productos.set(data.content);
         this.isLoading.set(false);
       },
@@ -74,5 +72,21 @@ export class ProductosComponent implements OnInit {
 
   protected selectCategory(category: string): void {
     this.selectedCategory.set(category);
+  }
+
+  protected agregarAlCarrito(producto: any): void {
+    try {
+      this.carritoService.agregarProducto({
+        idProducto: producto.idProducto,
+        nombre: producto.nombre,
+        precio: producto.precio,
+        imagen: producto.imagen,
+        stock: producto.cantidad
+      });
+      
+      alert('Producto agregado al carrito');
+    } catch (error: any) {
+      alert(error.message || 'Error al agregar producto al carrito');
+    }
   }
 }

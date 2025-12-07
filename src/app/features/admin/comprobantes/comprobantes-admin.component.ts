@@ -14,7 +14,6 @@ import { ComprobanteService } from '../../../core/services/comprobante.service';
         <p class="text-sm text-stone-600">Boletas y facturas emitidas</p>
       </div>
 
-      <!-- Generar comprobante -->
       <div class="bg-white rounded-2xl p-6 shadow-lg border-2 border-emerald-300">
         <h3 class="text-xl font-bold text-stone-900 mb-4">Generar Comprobante</h3>
         <form (submit)="generarComprobante()" class="space-y-4">
@@ -59,7 +58,6 @@ import { ComprobanteService } from '../../../core/services/comprobante.service';
         </form>
       </div>
 
-      <!-- Filtros -->
       <div class="bg-white rounded-2xl p-6 shadow-sm">
         <div class="flex gap-3">
           <button (click)="filtroTipo.set('TODOS')"
@@ -80,7 +78,6 @@ import { ComprobanteService } from '../../../core/services/comprobante.service';
         </div>
       </div>
 
-      <!-- Lista de comprobantes -->
       <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
         @if (loading()) {
           <div class="p-8">
@@ -132,7 +129,6 @@ export class ComprobantesAdminComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    // Inicialización
   }
 
   generarComprobante(): void {

@@ -26,7 +26,6 @@ export class LoginComponent {
       contrasena: ['', Validators.required]
     });
 
-    // Si ya está autenticado, redirigir
     if (this.authService.isAuthenticated()) {
       if (this.authService.isAdminOrTrabajador()) {
         this.router.navigate(['/admin']);

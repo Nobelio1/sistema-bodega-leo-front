@@ -170,7 +170,7 @@
           }
 
           <!-- Badge de stock bajo -->
-          @if (producto.stock <= 10 && producto.stock > 0) {
+          @if (producto.cantidad <= 10 && producto.cantidad > 0) {
           <div
             class="absolute top-3 left-3 px-3 py-1 bg-orange-500 text-white text-xs font-bold rounded-full shadow-lg"
           >
@@ -188,7 +188,7 @@
             >
               {{ producto.nombreCategoria }}
             </span>
-            @if (producto.stock > 0) {
+            @if (producto.cantidad > 0) {
             <span class="flex items-center gap-1 text-emerald-600 text-xs font-semibold">
               <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
                 <path
@@ -215,7 +215,7 @@
           </p>
 
           <!-- Stock Info -->
-          @if (producto.stock <= 20 && producto.stock > 0) {
+          @if (producto.cantidad <= 20 && producto.cantidad > 0) {
           <div class="mb-4 flex items-center gap-2 text-xs">
             <svg
               class="w-4 h-4 text-orange-500"
@@ -231,7 +231,7 @@
               />
             </svg>
             <span class="font-semibold text-orange-600"
-              >Solo quedan {{ producto.stock }} unidades</span
+              >Solo quedan {{ producto.cantidad }} unidades</span
             >
           </div>
           }
@@ -246,10 +246,11 @@
             </div>
 
             <button
+              (click)="agregarAlCarrito(producto)"
               class="flex items-center gap-2 px-5 py-2.5 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transition-all hover:shadow-md group/btn"
-              [disabled]="producto.stock === 0"
-              [class.opacity-50]="producto.stock === 0"
-              [class.cursor-not-allowed]="producto.stock === 0"
+              [disabled]="producto.cantidad === 0"
+              [class.opacity-50]="producto.cantidad === 0"
+              [class.cursor-not-allowed]="producto.cantidad === 0"
             >
               <svg
                 class="w-5 h-5 group-hover/btn:scale-110 transition-transform"
@@ -264,7 +265,7 @@
                   d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
                 />
               </svg>
-              <span>{{ producto.stock === 0 ? 'Agotado' : 'Agregar' }}</span>
+              <span>{{ producto.cantidad === 0 ? 'Agotado' : 'Agregar' }}</span>
             </button>
           </div>
         </div>
