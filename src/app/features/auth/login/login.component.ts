@@ -53,7 +53,6 @@ export class LoginComponent {
     this.authService.login(this.loginForm.value).subscribe({
       next: (response) => {
         this.loading.set(false);
-        // La redirección se maneja en el servicio
       },
       error: (error) => {
         this.loading.set(false);

@@ -1,8 +1,8 @@
-import {inject, Injectable, signal} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Router} from '@angular/router';
-import {Observable, tap} from 'rxjs';
-import {environment} from '../../../environments/environment';
+import { inject, Injectable, signal } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { Observable, tap } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 export interface Usuario {
   token: string;
@@ -25,11 +25,13 @@ export interface AuthResponse {
   success: boolean;
   message: string;
   data: {
+    usuario: string;
+    rol: string;
     token: string;
   };
 }
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly router = inject(Router);
@@ -47,10 +49,9 @@ export class AuthService {
 
   login(credentials: LoginRequest): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.API_URL}/login`, credentials).pipe(
-      tap(response => {
-
+      tap((response) => {
         if (response.success && response.data.token) {
-          this.handleAuthSuccess(response.data.token, credentials.nombreUsuario);
+          this.handleAuthSuccess(response.data.token, response.data.usuario, response.data.rol);
         }
       })
     );
@@ -58,9 +59,9 @@ export class AuthService {
 
   register(data: RegisterRequest): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.API_URL}/register`, data).pipe(
-      tap(response => {
+      tap((response) => {
         if (response.success && response.data.token) {
-          this.handleAuthSuccess(response.data.token, data.nombreUsuario);
+          this.handleAuthSuccess(response.data.token, data.nombreUsuario, data.rol);
         }
       })
     );
@@ -99,12 +100,12 @@ export class AuthService {
     return this.hasRole(['ADMIN', 'TRABAJADOR']);
   }
 
-  private handleAuthSuccess(token: string, nombreUsuario: string): void {
+  private handleAuthSuccess(token: string, nombreUsuario: string, rol: any): void {
     const decodedToken = this.decodeToken(token);
     const usuario: Usuario = {
       token,
-      rol: decodedToken.rol,
-      nombreUsuario
+      rol,
+      nombreUsuario,
     };
 
     localStorage.setItem(this.TOKEN_KEY, token);
@@ -112,7 +113,6 @@ export class AuthService {
     this.currentUser.set(usuario);
     this.isAuthenticated.set(true);
 
-    // Redirigir según el rol
     if (this.isAdminOrTrabajador()) {
       this.router.navigate(['/admin']);
     } else {
